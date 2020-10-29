@@ -1,0 +1,28 @@
+<h1>Listing Interests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Desc</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for interest <- @interests do %>
+    <tr>
+      <td><%= interest.name %></td>
+      <td><%= interest.desc %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.interest_path(@conn, :show, interest) %></span>
+        <span><%= link "Edit", to: Routes.interest_path(@conn, :edit, interest) %></span>
+        <span><%= link "Delete", to: Routes.interest_path(@conn, :delete, interest), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Interest", to: Routes.interest_path(@conn, :new) %></span>

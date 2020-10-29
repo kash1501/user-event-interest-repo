@@ -1,0 +1,18 @@
+<h1>Show Interest</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @interest.name %>
+  </li>
+
+  <li>
+    <strong>Desc:</strong>
+    <%= @interest.desc %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.interest_path(@conn, :edit, @interest) %></span>
+<span><%= link "Back", to: Routes.interest_path(@conn, :index) %></span>
