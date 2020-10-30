@@ -33,4 +33,7 @@
   </tbody>
 </table>
 
-<span><%= link "New Event", to: Routes.event_path(@conn, :new) %></span>
+
+<span><%= link "Back", to: Routes.user_path(@conn, :index) %></span>
+
+<!--<span><%= link "New Event", to: Routes.event_path(@conn, :new) %></span>  -->

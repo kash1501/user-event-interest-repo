@@ -4,8 +4,9 @@ defmodule UserEventInterestWeb.InterestController do
   alias UserEventInterest.Interests
   alias UserEventInterest.Interests.Interest
 
-  def index(conn, _params) do
-    interests = Interests.list_interests()
+  def index(conn, params) do
+    %{private: %{:plug_session => %{"user_id" => user_id}}} = conn
+    interests = Interests.get_specific_interests(user_id)
     render(conn, "index.html", interests: interests)
   end
 

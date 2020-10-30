@@ -64,10 +64,6 @@ defmodule UserEventInterest.Users do
 
   """
   def create_user(attrs \\ %{}) do
-    IO.inspect(attrs)
-    #if Map.get(:email)
-
-    #if attrs
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()

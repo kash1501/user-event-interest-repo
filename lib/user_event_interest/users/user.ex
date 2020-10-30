@@ -9,6 +9,8 @@ defmodule UserEventInterest.Users.User do
     field :is_admin, :boolean, default: false
     field :password, :string
     has_many :interest, UserEventInterest.Interests.Interest
+    has_many :events, UserEventInterest.Events.Event
+
 
     timestamps()
   end

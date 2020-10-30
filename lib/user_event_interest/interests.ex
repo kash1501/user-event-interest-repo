@@ -101,4 +101,10 @@ defmodule UserEventInterest.Interests do
   def change_interest(%Interest{} = interest, attrs \\ %{}) do
     Interest.changeset(interest, attrs)
   end
+
+  def get_specific_interests(user_id) do
+    Interest
+    |> where([i], i.user_id == ^user_id)
+    |> Repo.all()
+  end
 end

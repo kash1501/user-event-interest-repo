@@ -9,6 +9,7 @@ defmodule UserEventInterest.Events.Event do
     field :host, :string
     field :location, :string
     field :type, :string
+    belongs_to :user, UserEventInterest.Users.User
 
     timestamps()
   end
@@ -18,6 +19,7 @@ defmodule UserEventInterest.Events.Event do
     :host,
     :type,
     :location,
+    :user_id
   ]
 
   @optional_attributes [

@@ -15,7 +15,9 @@ defmodule UserEventInterestWeb.EventController do
   end
 
   def create(conn, %{"event" => event_params}) do
-    case Events.create_event(event_params) do
+    %{private: %{:plug_session => %{"user_id" => user_id}}} = conn
+    event_param_id = Map.merge(event_params, %{"user_id" => user_id})
+    case Events.create_event(event_param_id) do
       {:ok, event} ->
         conn
         |> put_flash(:info, "Event created successfully.")
