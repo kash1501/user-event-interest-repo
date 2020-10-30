@@ -21,6 +21,20 @@ defmodule UserEventInterest.Users do
     Repo.all(User)
   end
 
+  def authenticate_user(email, password) do
+    db_password = Repo.get_by(User, email: email) |> Map.get(:password)
+    db_user = Repo.get_by(User, email: email)
+
+    cond do
+      password == db_password -> {:ok, db_user}
+
+      password != db_password -> {:error, :unauthorized}
+
+      true -> {:error, :not_found}
+    end
+
+  end
+
   @doc """
   Gets a single user.
 
@@ -50,6 +64,10 @@ defmodule UserEventInterest.Users do
 
   """
   def create_user(attrs \\ %{}) do
+    IO.inspect(attrs)
+    #if Map.get(:email)
+
+    #if attrs
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()

@@ -17,6 +17,13 @@ defmodule UserEventInterestWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/login", SessionController, :new
+    get "/signup", UserController, :new
+    resources "/users", UserController
+    resources "/interests", InterestController
+    resources "/events", EventController
+    resources "/sessions", SessionController, only: [:new, :create], singleton: true
+
   end
 
   # Other scopes may use custom stacks.

@@ -16,12 +16,13 @@ defmodule UserEventInterest.Users.User do
   @required_attributes [
     :email,
     :password,
-    :is_admin
+    :is_admin,
+    :full_name,
+    :age
   ]
 
   @optional_attributes [
-    :full_name,
-    :age
+
   ]
 
   @doc false
@@ -29,5 +30,8 @@ defmodule UserEventInterest.Users.User do
     user
     |> cast(attrs, @required_attributes ++ @optional_attributes)
     |> validate_required(@required_attributes)
+    |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 8)
   end
 end
