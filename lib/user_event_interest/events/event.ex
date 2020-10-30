@@ -18,8 +18,6 @@ defmodule UserEventInterest.Events.Event do
     :host,
     :type,
     :location,
-    :user_id
-
   ]
 
   @optional_attributes [

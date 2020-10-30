@@ -25,4 +25,7 @@
   </tbody>
 </table>
 
-<span><%= link "New Interest", to: Routes.interest_path(@conn, :new) %></span>
+<!--<span><%= link "Add New Interest", to: Routes.interest_path(@conn, :new) %></span> -->
+
+
+<p><span><%= link "Back", to: Routes.user_path(@conn, :index) %></span></p>

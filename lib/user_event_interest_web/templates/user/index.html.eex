@@ -1,4 +1,36 @@
-<h1>Listing Users</h1>
+<section class="row">
+  <article class="column">
+    <a href ="/events"><h2>View All Events</h2></a>
+  </article>
+  <article class="column">
+    <a href ="/events/new"><h2>Add Event</h2></a>
+  </article>
+</section>
+
+
+<section class="row">
+  <article class="column">
+    <a href ="/interests"><h2>View All Interest</h2></a>
+  </article>
+  <article class="column">
+    <a href ="/interests/new"><h2>Add Interest</h2></a>
+  </article>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<h1>Listing Users</h1>
 
 <table>
   <thead>
@@ -31,4 +63,4 @@
   </tbody>
 </table>
 
-<span><%= link "New User", to: Routes.user_path(@conn, :new) %></span>
+<span><%= link "New User", to: Routes.user_path(@conn, :new) %></span> -->

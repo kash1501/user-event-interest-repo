@@ -17,6 +17,7 @@ defmodule UserEventInterest.Interests.Interest do
   ]
 
   @optional_attributes [
+
   ]
 
   @doc false

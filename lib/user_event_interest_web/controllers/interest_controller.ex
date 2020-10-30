@@ -15,7 +15,9 @@ defmodule UserEventInterestWeb.InterestController do
   end
 
   def create(conn, %{"interest" => interest_params}) do
-    case Interests.create_interest(interest_params) do
+    %{private: %{:plug_session => %{"user_id" => user_id}}} = conn
+    interest_param_id = Map.merge(interest_params, %{"user_id" => user_id})
+    case Interests.create_interest(interest_param_id) do
       {:ok, interest} ->
         conn
         |> put_flash(:info, "Interest created successfully.")
