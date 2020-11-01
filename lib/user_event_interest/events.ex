@@ -7,6 +7,7 @@ defmodule UserEventInterest.Events do
   alias UserEventInterest.Repo
 
   alias UserEventInterest.Events.Event
+  alias UserEventInterest.Users.UserEvent
 
   @doc """
   Returns the list of events.
@@ -19,6 +20,19 @@ defmodule UserEventInterest.Events do
   """
   def list_events do
     Repo.all(Event)
+  end
+
+  def get_event_id(event) do
+    %Event{id: event_id} = event
+    event_id
+  end
+
+  def list_events_users() do
+    Event
+    |> join(:left, [e], ue in UserEvent, on: e.id == ue.event_id)
+    |> select([e, ue], %{id: e.id, description: e.description, date: e.date, duration: e.duration, host: e.host, location: e.location,
+      type: e.type, event_creater_user_id: e.user_id, is_attending: ue.is_attending, rsvp_user_id: ue.user_id})
+    |> Repo.all()
   end
 
   @doc """

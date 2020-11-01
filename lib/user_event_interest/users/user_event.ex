@@ -17,7 +17,8 @@ defmodule UserEventInterest.Users.UserEvent do
   ]
 
   @optional_attributes [
-
+    :is_attending,
+    :is_cancelling
   ]
 
   @doc false

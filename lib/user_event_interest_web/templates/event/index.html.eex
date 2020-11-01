@@ -9,12 +9,13 @@
       <th>Duration</th>
       <th>Host</th>
       <th>Location</th>
-
+      <th>Action</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for event <- @events do %>
+  
+  <%= for event <- @event_is do %>
     <tr>
       <td><%= event.description %></td>
       <td><%= event.type %></td>
@@ -25,11 +26,41 @@
 
       <td>
         <span><%= link "Show", to: Routes.event_path(@conn, :show, event) %></span>
+
+        <%= if event.user_id == @login_user_id do %>
         <span><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
         <span><%= link "Delete", to: Routes.event_path(@conn, :delete, event), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <p><%= "My Event"%>
+        <%= end %>
+
+        <%= cond do %>
+          <%= event.user_id == @login_user_id -> %>
+            <%=  %>
+
+          <%= List.first(@attend_event) == nil -> %>
+            <span><%= link "Accept", to: Routes.user_path(@conn, :accept_invitation, event.id) %></span>
+
+          <%= Enum.find(@attend_event, fn map -> map[:event_id] == event.id end) == nil -> %>
+            <span><%= link "Accept", to: Routes.user_path(@conn, :accept_invitation, event.id) %></span>
+
+          <%= true -> %>
+            <%= case Enum.find(@attend_event, fn map -> map[:event_id] == event.id end) |> Map.get(:is_attending) do %>
+              <%= true -> %>
+                <span><%= link "Cancel", to: Routes.user_path(@conn, :cancel_invitation, event.id) %></span>
+
+              <%= false -> %>
+                <span><%= link "Accept", to: Routes.user_path(@conn, :accept_invitation, event.id) %></span>
+
+              <%= nil -> %>
+                <span><%= link "Cancel", to: Routes.user_path(@conn, :cancel_invitation, event.id) %></span>
+                <span><%= link "Accept", to: Routes.user_path(@conn, :accept_invitation, event.id) %></span>
+            <%= end %>
+            
+
+        <%= end %>
       </td>
     </tr>
-<% end %>
+<%= end %>
   </tbody>
 </table>
 

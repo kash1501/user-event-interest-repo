@@ -3,6 +3,7 @@ defmodule UserEventInterestWeb.UserController do
 
   alias UserEventInterest.Users
   alias UserEventInterest.Users.User
+  alias UserEventInterest.UserEvents
 
   def index(conn, _params) do
     users = Users.list_users()
@@ -58,5 +59,40 @@ defmodule UserEventInterestWeb.UserController do
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: Routes.user_path(conn, :index))
+  end
+
+  def accept_invitation(conn, event) do
+    IO.puts("1111111111")
+    %{private: %{:plug_session => %{"user_id" => user_id}}} = conn
+    %{"id" => event_id} = event
+    user_event_map = %{user_id: user_id, event_id: event_id, is_attending: true, is_cancelling: false}
+    case UserEvents.yes_no_user_event(user_event_map) do
+      {:ok, user_event} ->
+        conn
+        |> put_flash(:info, "Invite Accepted Successfully")
+        |> redirect(to: Routes.event_path(conn, :index))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        conn
+        |> put_flash(:error, "Unable to Accept the invite")
+        |> redirect(to: Routes.event_path(conn, :index))
+    end
+  end
+
+  def cancel_invitation(conn, event) do
+    %{private: %{:plug_session => %{"user_id" => user_id}}} = conn
+    %{"id" => event_id} = event
+    user_event_map = %{user_id: user_id, event_id: event_id, is_attending: false, is_cancelling: true}
+    case UserEvents.yes_no_user_event(user_event_map) do
+      {:ok, user_event} ->
+        conn
+        |> put_flash(:info, "Invite Cancelled Successfully")
+        |> redirect(to: Routes.event_path(conn, :index))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        conn
+        |> put_flash(:error, "Unable to Cancel the invite")
+        |> redirect(to: Routes.event_path(conn, :index))
+    end
   end
 end
