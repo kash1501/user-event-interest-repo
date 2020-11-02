@@ -34,7 +34,48 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></span>
+<span><b><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></b></span>
 
-<span><%= link "Back", to: Routes.user_path(@conn, :index) %></span>
+<span><b><%= link "Back", to: Routes.user_path(@conn, :index) %></b></span>
 <!--<span><%= link "Back", to: Routes.event_path(@conn, :index) %></span>  -->
+
+
+<%= if @login_user.is_admin == true do %>
+
+  <p><p><h1> List of Users For Event </h1></p></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <%= for user <- @users do %>
+      <%= if @event.user_id != user.id do %>
+        <tr>
+          <td><%= user.full_name %></td>
+          <td><%= user.email %></td>
+          <td>
+            <%= cond do %>
+              <%= Enum.find(@user_events, fn map -> map[:user_id] == user.id end) == nil -> %>
+                <span><%= link "Accept", to: Routes.user_path(@conn, :accept_invitation_for_event, @event.id, user.id) %></span>
+
+              <%= true -> %>
+                <%= case Enum.find(@user_events, fn map -> map[:user_id] == user.id end) |> Map.get(:is_attending) do %>
+                  <%= true -> %>
+                    <span><%= link "Cancel", to: Routes.user_path(@conn, :cancel_invitation_for_event, @event.id, user.id) %></span>
+
+                  <%= false -> %>
+                    <span><%= link "Accept", to: Routes.user_path(@conn, :accept_invitation_for_event, @event.id, user.id) %></span>
+                <%= end %>
+            <%= end %>
+          </td>
+        </tr>
+      <%= end %>
+    <%= end %>
+    </tbody>
+  </table>
+<%= end %>

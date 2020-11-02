@@ -50,13 +50,7 @@
 
               <%= false -> %>
                 <span><%= link "Accept", to: Routes.user_path(@conn, :accept_invitation, event.id) %></span>
-
-              <%= nil -> %>
-                <span><%= link "Cancel", to: Routes.user_path(@conn, :cancel_invitation, event.id) %></span>
-                <span><%= link "Accept", to: Routes.user_path(@conn, :accept_invitation, event.id) %></span>
             <%= end %>
-            
-
         <%= end %>
       </td>
     </tr>

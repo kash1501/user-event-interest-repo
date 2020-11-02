@@ -5,6 +5,7 @@ defmodule UserEventInterestWeb.EventController do
   alias UserEventInterest.Events.Event
   alias UserEventInterest.UserEvents
   alias UserEventInterest.Users.User
+  alias UserEventInterest.Users
 
 
   def index(conn, _params) do
@@ -34,8 +35,12 @@ defmodule UserEventInterestWeb.EventController do
   end
 
   def show(conn, %{"id" => id}) do
+    %{private: %{:plug_session => %{"user_id" => login_user_id}}} = conn
     event = Events.get_event!(id)
-    render(conn, "show.html", event: event)
+    users = Users.list_users()
+    user_events = UserEvents.people_list(id)
+    login_user = Users.get_user!(login_user_id)
+    render(conn, "show.html", event: event, users: users, user_events: user_events, login_user: login_user)
   end
 
   def edit(conn, %{"id" => id}) do

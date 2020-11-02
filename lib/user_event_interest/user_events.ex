@@ -1,10 +1,17 @@
 defmodule UserEventInterest.UserEvents do
 
-
   import Ecto.Query, warn: false
   alias UserEventInterest.Repo
-
   alias UserEventInterest.Users.UserEvent
+
+
+
+  def people_list(event_id) do
+    UserEvent
+    |> where([i], i.event_id == ^event_id)
+    |> select([i], %{user_id: i.user_id, is_attending: i.is_attending})
+    |> Repo.all()
+  end
 
   def attending_event(user_id) do
     UserEvent
