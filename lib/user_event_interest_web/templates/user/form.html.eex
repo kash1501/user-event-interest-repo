@@ -26,6 +26,6 @@
   <%= error_tag f, :is_admin %>
 
   <div>
-    <%= submit "Sign Up" %>
+    <%= submit "Submit" %>
   </div>
 <% end %>

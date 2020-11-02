@@ -17,50 +17,97 @@
   </article>
 </section>
 
+<%= if @login_user.is_admin == true do %>
+<h1>User Details</h1>
+
+<ul>
+
+  <li>
+    <strong>Id:</strong>
+    <%= @login_user.id %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @login_user.full_name %>
+  </li>
+
+  <li>
+    <strong>Age:</strong>
+    <%= @login_user.age %>
+  </li>
+
+  <li>
+    <strong>E-Mail:</strong>
+    <%= @login_user.email %>
+  </li>
+
+</ul>
+
+<span><b><%= link "Edit", to: Routes.user_path(@conn, :edit, @login_user) %></b></span>
+<span><b><%= link "Back", to: Routes.user_path(@conn, :index) %></b></span>
+
+
+  <h1>Listing Users</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Full name</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Action</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+  <%= for user <- @users do %>
+    <%= if user.id != @login_user.id do %>
+      <tr>
+        <td><%= user.full_name %></td>
+        <td><%= user.age %></td>
+        <td><%= user.email %></td>
+
+        <td>
+          <span><%= link "Show", to: Routes.user_path(@conn, :show, user) %></span>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+    </tbody>
+  </table>
+
+<%= else %>
+<h1>User Details</h1>
+
+<ul>
+
+  <li>
+    <strong>Id:</strong>
+    <%= @login_user.id %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @login_user.full_name %>
+  </li>
+
+  <li>
+    <strong>Age:</strong>
+    <%= @login_user.age %>
+  </li>
+
+  <li>
+    <strong>E-Mail:</strong>
+    <%= @login_user.email %>
+  </li>
+
+</ul>
+
+<span><b><%= link "Edit", to: Routes.user_path(@conn, :edit, @login_user) %></b></span>
+<span><b><%= link "Back", to: Routes.user_path(@conn, :index) %></b></span>
 
 
 
-
-
-
-
-
-
-
-
-
-
-<!--<h1>Listing Users</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Full name</th>
-      <th>Age</th>
-      <th>Email</th>
-      <th>Password</th>
-      <th>Is admin</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for user <- @users do %>
-    <tr>
-      <td><%= user.full_name %></td>
-      <td><%= user.age %></td>
-      <td><%= user.email %></td>
-      <td><%= user.password %></td>
-      <td><%= user.is_admin %></td>
-
-      <td>
-        <span><%= link "Show", to: Routes.user_path(@conn, :show, user) %></span>
-        <span><%= link "Edit", to: Routes.user_path(@conn, :edit, user) %></span>
-        <span><%= link "Delete", to: Routes.user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
-<span><%= link "New User", to: Routes.user_path(@conn, :new) %></span> -->
+<%= end %>
