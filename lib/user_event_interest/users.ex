@@ -22,17 +22,19 @@ defmodule UserEventInterest.Users do
   end
 
   def authenticate_user(email, password) do
-    db_password = Repo.get_by(User, email: email) |> Map.get(:password)
-    db_user = Repo.get_by(User, email: email)
+    User
+    |> where([i], i.email == ^email)
+    |> Repo.one()
+    |> case do
+      nil -> {:error, :not_found}
 
-    cond do
-      password == db_password -> {:ok, db_user}
+      user ->
+        cond do
+          Map.get(user, :password) == password -> {:ok, user}
 
-      password != db_password -> {:error, :unauthorized}
-
-      true -> {:error, :not_found}
+          Map.get(user, :password) != password -> {:error, :unauthorized}
+        end
     end
-
   end
 
   @doc """

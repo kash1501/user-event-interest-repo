@@ -33,7 +33,7 @@ defmodule UserEventInterest.Users.User do
     |> cast(attrs, @required_attributes ++ @optional_attributes)
     |> validate_required(@required_attributes)
     |> unique_constraint(:email)
-    |> validate_format(:email, ~r/@/)
+    |> validate_format(:email, ~r/^[A-Za-z0-9._%+-+']+@[A-Za-z0-9.-]+\.[A-Za-z]+$/)
     |> validate_length(:password, min: 8)
   end
 end
