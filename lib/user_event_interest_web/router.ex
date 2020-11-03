@@ -23,6 +23,7 @@ defmodule UserEventInterestWeb.Router do
     get "/cancel_invitation_for_event/:id/:user_id", UserController, :cancel_invitation_for_event
     get "/accept_invitation/:id", UserController, :accept_invitation
     get "/cancel_invitation/:id", UserController, :cancel_invitation
+    get "/add_interest/:id", UserController, :add_interest
     resources "/users", UserController
     resources "/interests", InterestController
     resources "/events", EventController

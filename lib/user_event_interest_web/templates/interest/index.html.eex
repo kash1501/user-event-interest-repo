@@ -17,8 +17,27 @@
 
       <td>
         <span><%= link "Show", to: Routes.interest_path(@conn, :show, interest) %></span>
-        <span><%= link "Edit", to: Routes.interest_path(@conn, :edit, interest) %></span>
-        <span><%= link "Delete", to: Routes.interest_path(@conn, :delete, interest), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <%= cond do %>
+
+          <%= List.first(@login_user_interest) == nil -> %>
+            <span><%= link "Add", to: Routes.user_path(@conn, :add_interest, interest.id) %></span>
+
+          <%= Enum.find(@login_user_interest, fn map -> map[:interest_id] == interest.id end) == nil -> %>
+            <span><%= link "Add", to: Routes.user_path(@conn, :add_interest, interest.id) %></span>
+
+          <%= true -> %>
+            <%= case Enum.find(@login_user_interest, fn map -> map[:interest_id] == interest.id end) |> Map.get(:is_adding) do %>
+              <%= true -> %>
+                <p><%= "My Interest"%></p>
+            <%= end %>
+        <%= end %>
+
+        
+
+
+
+        <!--<span><%= link "Edit", to: Routes.interest_path(@conn, :edit, interest) %></span>
+        <span><%= link "Delete", to: Routes.interest_path(@conn, :delete, interest), method: :delete, data: [confirm: "Are you sure?"] %></span>-->
       </td>
     </tr>
 <% end %>

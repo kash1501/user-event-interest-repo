@@ -5,15 +5,13 @@ defmodule UserEventInterest.Interests.Interest do
   schema "interests" do
     field :desc, :string
     field :name, :string
-    belongs_to :user, UserEventInterest.Users.User
 
     timestamps()
   end
 
   @required_attributes [
     :name,
-    :desc,
-    :user_id
+    :desc
   ]
 
   @optional_attributes [

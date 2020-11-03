@@ -5,6 +5,7 @@ defmodule UserEventInterestWeb.UserController do
   alias UserEventInterest.Users.User
   alias UserEventInterest.UserEvents
   alias UserEventInterest.Events
+  alias UserEventInterest.UserInterests
 
   def index(conn, params) do
     %{private: %{:plug_session => %{"user_id" => login_user_id}}} = conn
@@ -129,6 +130,23 @@ defmodule UserEventInterestWeb.UserController do
         conn
         |> put_flash(:error, "Unable to Cancel the invite")
         |> redirect(to: Routes.event_path(conn, :index))
+    end
+  end
+
+  def add_interest(conn, interest) do
+    %{private: %{:plug_session => %{"user_id" => login_user_id}}} = conn
+    %{"id" => interest_id} = interest
+    user_interest_map = %{user_id: login_user_id, interest_id: interest_id, is_adding: true}
+    case UserInterests.yes_no_user_interest(user_interest_map) do
+      {:ok, user_interest} ->
+        conn
+        |> put_flash(:info, "Interest Added Successfully")
+        |> redirect(to: Routes.interest_path(conn, :index))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        conn
+        |> put_flash(:error, "Unable to Add the interest")
+        |> redirect(to: Routes.interest_path(conn, :index))
     end
   end
 end
