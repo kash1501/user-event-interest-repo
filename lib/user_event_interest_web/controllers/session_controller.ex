@@ -36,4 +36,11 @@ defmodule UserEventInterestWeb.SessionController do
         end
     end
   end
+
+  def delete(conn, _) do
+    conn
+    |> configure_session(drop: true)
+    |> put_flash(:success, "Successfully Logged Out")
+    |> redirect(to: "/")
+  end
 end

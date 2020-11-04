@@ -19,6 +19,7 @@ defmodule UserEventInterestWeb.Router do
     get "/", PageController, :index
     get "/login", SessionController, :new
     get "/signup", UserController, :new
+    get "/logout", SessionController, :delete
     get "/accept_invitation_for_event/:id/:user_id", UserController, :accept_invitation_for_event
     get "/cancel_invitation_for_event/:id/:user_id", UserController, :cancel_invitation_for_event
     get "/accept_invitation/:id", UserController, :accept_invitation
