@@ -10,7 +10,8 @@
       <th>Host</th>
       <th>Location</th>
       <th>Action</th>
-      <th></th>
+      <th>attendee count</th>
+      <th>cancel count</th>
     </tr>
   </thead>
   <tbody>
@@ -23,7 +24,6 @@
       <td><%= event.duration %></td>
       <td><%= event.host %></td>
       <td><%= event.location %></td>
-
       <td>
         <span><%= link "Show", to: Routes.event_path(@conn, :show, event) %></span>
 
@@ -51,6 +51,30 @@
               <%= false -> %>
                 <span><%= link "Accept", to: Routes.user_path(@conn, :accept_invitation, event.id) %></span>
             <%= end %>
+        <%= end %>
+      </td>
+      <td>
+        <%= cond do %>
+          <%= List.first(@attendee_count) == nil -> %>
+            <span> 0 </span>
+          
+          <%= Enum.find(@attendee_count, fn map -> map[:event_id] == event.id end) == nil -> %>
+            <span> 0 </span>
+
+          <%= true -> %>
+            <%= Enum.find(@attendee_count, fn map -> map[:event_id] == event.id end) |> Map.get(:count) %>
+        <%= end %>
+      </td>
+      <td>
+        <%= cond do %>
+          <%= List.first(@cancel_count) == nil -> %>
+            <span> 0 </span>
+          
+          <%= Enum.find(@cancel_count, fn map -> map[:event_id] == event.id end) == nil -> %>
+            <span> 0 </span>
+
+          <%= true -> %>
+            <%= Enum.find(@cancel_count, fn map -> map[:event_id] == event.id end) |> Map.get(:count) %>
         <%= end %>
       </td>
     </tr>

@@ -4,7 +4,21 @@ defmodule UserEventInterest.UserEvents do
   alias UserEventInterest.Repo
   alias UserEventInterest.Users.UserEvent
 
+  def attend_count() do
+    UserEvent
+    |> where([ue], ue.is_attending == true)
+    |> group_by([ue], ue.event_id)
+    |> select([ue], %{event_id: ue.event_id, count: count(ue.id)})
+    |> Repo.all()
+  end
 
+  def cancel_count() do
+    UserEvent
+    |> where([ue], ue.is_cancelling == true)
+    |> group_by([ue], ue.event_id)
+    |> select([ue], %{event_id: ue.event_id, count: count(ue.id)})
+    |> Repo.all()
+  end
 
   def people_list(event_id) do
     UserEvent

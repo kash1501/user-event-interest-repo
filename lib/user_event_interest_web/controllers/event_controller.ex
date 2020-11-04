@@ -12,7 +12,9 @@ defmodule UserEventInterestWeb.EventController do
     event_is = Events.list_events()
     %{private: %{:plug_session => %{"user_id" => login_user_id}}} = conn
     attend_event = UserEvents.attending_event(login_user_id)
-    render(conn, "index.html", event_is: event_is, login_user_id: login_user_id, attend_event: attend_event)
+    attendee_count = UserEvents.attend_count()
+    cancel_count = UserEvents.cancel_count()
+    render(conn, "index.html", event_is: event_is, login_user_id: login_user_id, attend_event: attend_event, attendee_count: attendee_count, cancel_count: cancel_count)
   end
 
   def new(conn, _params) do
