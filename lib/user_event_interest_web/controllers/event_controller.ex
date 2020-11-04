@@ -6,11 +6,11 @@ defmodule UserEventInterestWeb.EventController do
   alias UserEventInterest.UserEvents
   alias UserEventInterest.Users.User
   alias UserEventInterest.Users
-
+  alias UserEventInterest.Utility.LoginUser
 
   def index(conn, _params) do
     event_is = Events.list_events()
-    %{private: %{:plug_session => %{"user_id" => login_user_id}}} = conn
+    login_user_id = LoginUser.get_login_user_id(conn)
     attend_event = UserEvents.attending_event(login_user_id)
     attendee_count = UserEvents.attend_count()
     cancel_count = UserEvents.cancel_count()
@@ -23,8 +23,8 @@ defmodule UserEventInterestWeb.EventController do
   end
 
   def create(conn, %{"event" => event_params}) do
-    %{private: %{:plug_session => %{"user_id" => user_id}}} = conn
-    event_param_id = Map.merge(event_params, %{"user_id" => user_id})
+    login_user_id = LoginUser.get_login_user_id(conn)
+    event_param_id = Map.merge(event_params, %{"user_id" => login_user_id})
     case Events.create_event(event_param_id) do
       {:ok, event} ->
         conn
@@ -37,7 +37,7 @@ defmodule UserEventInterestWeb.EventController do
   end
 
   def show(conn, %{"id" => id}) do
-    %{private: %{:plug_session => %{"user_id" => login_user_id}}} = conn
+    login_user_id = LoginUser.get_login_user_id(conn)
     event = Events.get_event!(id)
     users = Users.list_users()
     user_events = UserEvents.people_list(id)

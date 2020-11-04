@@ -61,15 +61,15 @@
           <td>
             <%= cond do %>
               <%= Enum.find(@user_events, fn map -> map[:user_id] == user.id end) == nil -> %>
-                <span><%= link "Accept", to: Routes.user_path(@conn, :accept_invitation_for_event, @event.id, user.id) %></span>
+                <span><%= link "Add", to: Routes.user_path(@conn, :accept_invitation_for_event, @event.id, user.id) %></span>
 
               <%= true -> %>
                 <%= case Enum.find(@user_events, fn map -> map[:user_id] == user.id end) |> Map.get(:is_attending) do %>
                   <%= true -> %>
-                    <span><%= link "Cancel", to: Routes.user_path(@conn, :cancel_invitation_for_event, @event.id, user.id) %></span>
+                    <span><%= link "Remove", to: Routes.user_path(@conn, :cancel_invitation_for_event, @event.id, user.id) %></span>
 
                   <%= false -> %>
-                    <span><%= link "Accept", to: Routes.user_path(@conn, :accept_invitation_for_event, @event.id, user.id) %></span>
+                    <span><%= link "Add", to: Routes.user_path(@conn, :accept_invitation_for_event, @event.id, user.id) %></span>
                 <%= end %>
             <%= end %>
           </td>

@@ -4,9 +4,10 @@ defmodule UserEventInterestWeb.InterestController do
   alias UserEventInterest.Interests
   alias UserEventInterest.Interests.Interest
   alias UserEventInterest.UserInterests
+  alias UserEventInterest.Utility.LoginUser
 
   def index(conn, params) do
-    %{private: %{:plug_session => %{"user_id" => login_user_id}}} = conn
+    login_user_id = LoginUser.get_login_user_id(conn)
     interests = Interests.list_interests()
     login_user_interest = UserInterests.get_login_user_interests(login_user_id)
     render(conn, "index.html", interests: interests, login_user_interest: login_user_interest)
@@ -18,8 +19,6 @@ defmodule UserEventInterestWeb.InterestController do
   end
 
   def create(conn, %{"interest" => interest_params}) do
-    #%{private: %{:plug_session => %{"user_id" => user_id}}} = conn
-    #interest_param_id = Map.merge(interest_params, %{"user_id" => user_id})
     case Interests.create_interest(interest_params) do
       {:ok, interest} ->
         conn
