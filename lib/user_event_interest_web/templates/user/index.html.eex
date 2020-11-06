@@ -78,7 +78,7 @@
     </tbody>
   </table>
 
-<%= else %>
+<% else %>
 <h1>User Details</h1>
 
 <ul>
@@ -110,4 +110,4 @@
 
 
 
-<%= end %>
+<% end %>

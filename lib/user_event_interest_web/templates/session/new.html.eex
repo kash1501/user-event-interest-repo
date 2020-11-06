@@ -8,7 +8,7 @@
     </label>
 
     <label>
-        Password: <%= text_input f, :password, placeholder: "Enter Password", class: "form-control" %>
+        Password: <%= password_input f, :password, placeholder: "Enter Password", class: "form-control" %>
     </label>
 
     <%= submit "Log In" %>
