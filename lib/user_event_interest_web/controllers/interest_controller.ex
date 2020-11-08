@@ -21,10 +21,17 @@ defmodule UserEventInterestWeb.InterestController do
   def create(conn, %{"interest" => interest_params}) do
     case Interests.create_interest(interest_params) do
       {:ok, interest} ->
-        conn
-        |> put_flash(:info, "Interest created successfully.")
-        |> redirect(to: Routes.interest_path(conn, :show, interest))
+        login_user_id = LoginUser.get_login_user_id(conn)
+        params = %{user_id: login_user_id, interest_id: interest.id}
+        case UserInterests.add_user_interest(params) do
+          {:ok, user_interest} -> 
+            conn
+            |> put_flash(:info, "Interest created successfully.")
+            |> redirect(to: Routes.interest_path(conn, :show, interest))
 
+          {:error, %Ecto.Changeset{} = changeset} ->
+            render(conn, "new.html", changeset: changeset)
+        end
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

@@ -4,14 +4,9 @@ defmodule UserEventInterest.UserInterests do
   alias UserEventInterest.Repo
   alias UserEventInterest.Users.UserInterest
 
-
-
-  # def people_list(event_id) do
-  #   UserEvent
-  #   |> where([i], i.event_id == ^event_id)
-  #   |> select([i], %{user_id: i.user_id, is_attending: i.is_attending})
-  #   |> Repo.all()
-  # end
+  def add_user_interest(params) do
+    yes_no_user_interest(params)
+  end
 
   def get_login_user_interests(user_id) do
     UserInterest
@@ -26,12 +21,6 @@ defmodule UserEventInterest.UserInterests do
     |> where([i], i.interest_id == ^interest_id)
     |> Repo.one()
   end
-
-  # def get_login_user_interests(user_id) do
-  #   UserInterest
-  #   |> where([i], i.user_id == ^user_id)
-  #   |> Repo.all()
-  # end
 
   def yes_no_user_interest(params) do
     user_id = Map.get(params, :user_id)
