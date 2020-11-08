@@ -4,6 +4,13 @@ defmodule UserEventInterest.UserEvents do
   alias UserEventInterest.Repo
   alias UserEventInterest.Users.UserEvent
 
+  
+  def delete_user_event_data(event_id) do
+    UserEvent
+    |> where([ue], ue.event_id == ^event_id)
+    |> Repo.delete_all
+  end
+  
   def attend_count() do
     UserEvent
     |> where([ue], ue.is_attending == true)

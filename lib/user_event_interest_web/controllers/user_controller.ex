@@ -89,7 +89,7 @@ defmodule UserEventInterestWeb.UserController do
     case UserEvents.yes_no_user_event(user_event_map) do
       {:ok, _} ->
         conn
-        |> put_flash(:info, "Invite Accepted Successfully")
+        |> put_flash(:info, "User Added Successfully")
         |> redirect(to: Routes.event_path(conn, :show, event_struct))
 
       {:error, _} ->
@@ -123,7 +123,7 @@ defmodule UserEventInterestWeb.UserController do
     case UserEvents.yes_no_user_event(user_event_map) do
       {:ok, _} ->
         conn
-        |> put_flash(:info, "Invite Cancelled Successfully")
+        |> put_flash(:info, "User Cancelled Successfully")
         |> redirect(to: Routes.event_path(conn, :show, event_struct))
 
       {:error, _} ->

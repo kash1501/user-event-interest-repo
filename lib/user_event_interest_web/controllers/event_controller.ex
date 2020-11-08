@@ -67,6 +67,7 @@ defmodule UserEventInterestWeb.EventController do
 
   def delete(conn, %{"id" => id}) do
     event = Events.get_event!(id)
+    delete_user_event = UserEvents.delete_user_event_data(id)
     {:ok, _event} = Events.delete_event(event)
 
     conn

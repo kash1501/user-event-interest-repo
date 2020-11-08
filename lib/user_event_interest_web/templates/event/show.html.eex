@@ -38,7 +38,7 @@
   <span><b><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></b></span>
 <% end %>
 
-<span><b><%= link "Back", to: Routes.user_path(@conn, :index) %></b></span>
+<span><b><%= link "Back", to: Routes.event_path(@conn, :index) %></b></span>
 <!--<span><%= link "Back", to: Routes.event_path(@conn, :index) %></span>  -->
 
 
